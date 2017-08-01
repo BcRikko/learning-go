@@ -122,6 +122,45 @@ Hello world!
 ```
 
 
+### 関連ツールのインストール
+
+VSCodeでコードを書いているときに`[Info]The "go-outline" command is not available. Use "go get -v github.com/ramya-rao-a/go-outline" to install.`のようなメッセージがでることがある。`go-outline`だけでなく`golint`や`go-symbols`なども。
+
+そのときは`Install All`をクリックすると、`OUTPUT`に以下のように出力される。
+これらのパッケージは、`$GOPATH/bin`や`$GOPATH/src/github.com/...`などにインストールされる。
+
+```
+Installing 12 tools
+  gocode
+  gopkgs
+  go-outline
+  go-symbols
+  guru
+  gorename
+  gomodifytags
+  impl
+  godef
+  goreturns
+  golint
+  gotests
+
+Installing github.com/nsf/gocode SUCCEEDED
+Installing github.com/tpng/gopkgs SUCCEEDED
+Installing github.com/ramya-rao-a/go-outline SUCCEEDED
+Installing github.com/acroca/go-symbols SUCCEEDED
+Installing golang.org/x/tools/cmd/guru SUCCEEDED
+Installing golang.org/x/tools/cmd/gorename SUCCEEDED
+Installing github.com/fatih/gomodifytags SUCCEEDED
+Installing github.com/josharian/impl SUCCEEDED
+Installing github.com/rogpeppe/godef SUCCEEDED
+Installing sourcegraph.com/sqs/goreturns SUCCEEDED
+Installing github.com/golang/lint/golint SUCCEEDED
+Installing github.com/cweill/gotests/... SUCCEEDED
+
+All tools successfully installed. You're ready to Go :).
+```
+
+
 
 ## おまけ
 

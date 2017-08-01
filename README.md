@@ -7,5 +7,5 @@ golangの学習用リポジトリ。
 
 ## TOC
 
-* [開発環境構築](./setup.md)
+* [開発環境構築](./setup)
 * [Hello world](./helloworld)

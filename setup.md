@@ -95,6 +95,33 @@ Hello world!
 ```
 
 
+## VSCodeの設定
+
+VSCode上でプログラミングするために、いくつかの設定を行う。
+
+1. VSCodeで[go](https://github.com/Microsoft/vscode-go)のextensionsをインストールする
+  * コマンドパレットを開いて、`go`で検索
+2. gvmを使っていると`$GOPATH`にアクセスできないので`.bash_profile`などでパスを通しておく
+  * `gvmを使わずインストールする(Macの場合)`の`パスを通す`を参照
+  * だいたいは`$HOME/go`になる
+  * 以降、`$HOME/go`配下で開発することになる
+3. デバッグ用ツールの[delve](https://github.com/derekparker/delve)をインストールする
+  * `go get -u -v github.com/derekparker/delve/cmd/dlv`
+  * `$GOPATH/src/github.com/derekparker/delve`と`$GOPATH/bin/dlv`にファイルが作られる
+4. VSCodeで`F5`を押し、`launch.json`を作成する
+  * 特に編集はしない
+5. サンプルプログラムを書いて、F5で実行
+  * 実行時に`Developer Tools Accessは、デバッグを実行するために別のプロセスを制御する必要があります。`とパスワードを求められるので入力
+
+```bash
+2017/08/01 11:41:43 server.go:73: Using API v1
+2017/08/01 11:41:43 debugger.go:97: launching process with args: [$HOME/go/src/github.com/BcRikko/learning-go/debug]
+API server listening at: 127.0.0.1:2345
+2017/08/01 11:41:58 debugger.go:505: continuing
+Hello world!
+```
+
+
 
 ## おまけ
 
@@ -112,7 +139,7 @@ go version go1.8.1 darwin/amd64
 $ cat << EOL >> ~/.bash_profile
 ## go
 if [ -x "`which go`" ]; then
-  export GOPATH=\$HOME/.go
+  export GOPATH=\$HOME/go
   export PATH=\$GOPATH/bin:\$PATH
 fi
 EOL

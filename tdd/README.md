@@ -28,7 +28,7 @@ func TestXxx(t *testing.T) {
 JavaScriptでは`expect`, `actual`を使うが、goでは`want`, `got`を使うのが一般的らしい。
 
 
-[TODO: コミットハッシュ]を実行すると、以下のようになる。  
+[commit:ea70fcb](https://github.com/BcRikko/learning-go/commit/ea70fcb429bfb806cb04ee545af2e3d0ac985109)を実行すると、以下のようになる。  
 テストの実行は、VSCodeのエディタ上に表示される`run package tests`や`run test`をクリックするだけでOK。
 ```
 Running tool: /usr/local/bin/go test -timeout 30s -tags 
@@ -39,4 +39,27 @@ FAIL
 exit status 1
 FAIL	github.com/BcRikko/learning-go/tdd	0.009s
 Error: Tests failed.
+```
+
+
+## ステップ2: 仮実装でテストを通す
+
+
+[todo]()で仮実装して実行する。
+
+```
+Running tool: /usr/local/bin/go test -timeout 30s -tags 
+
+PASS
+ok  	github.com/BcRikko/learning-go/tdd	0.008s
+Success: Tests passed.
+```
+
+公開する関数はパスカルケースで定義する。そのときにコメントがついていないと`severity: 'Warning' message: 'exported function ToRoman should have comment or be unexported'`という警告が表示されるので、関数の直前に`// {Method} hoge`のようなコメントを付ける。
+
+```go
+// ToRoman は数値をローマ数字に変換する
+func ToRoman (in int16) string {
+    // hoge
+}
 ```

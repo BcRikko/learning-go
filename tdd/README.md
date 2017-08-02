@@ -107,11 +107,59 @@ func main() {
 }
 ```
 
-[todo]()を実行し、テストが通ることを確認する。
+[commit:0beb2d7](https://github.com/BcRikko/learning-go/commit/0beb2d71ae06417c756bcb636d487154ba56f9d6)を実行し、テストが通ることを確認する。
 ```
 Running tool: /usr/local/bin/go test -timeout 30s -tags 
 
 PASS
 ok  	github.com/BcRikko/learning-go/tdd	0.008s
+Success: Tests passed.
+```
+
+
+## ステップ4: データ駆動型のテストに書き換える
+
+`struct`の配列を使い、データ駆動型のテストに書き換える。
+
+```go
+testCase := []struct {
+    desc string
+    in   "入力値"
+    want "期待値"
+}{
+    {"テストの説明", "入力値", "期待値"}
+}
+
+for _, test := range testCase {
+    t.Run(test.desc, func(t *testing.T) {
+        if got := "テストしたいメソッド"; got != test.want {
+            t.Errorf("エラーメッセージ")
+        }
+    })
+}
+```
+
+
+[todo]()を実行し、テストが通ることを確認する。
+
+```
+# 失敗した場合
+Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$
+
+--- FAIL: TestToRoman (0.00s)
+    --- FAIL: TestToRoman/1=>Iに変換できること (0.00s)
+    	$GOPATH/src/github.com/BcRikko/learning-go/tdd/roman_test.go:19: Arabic.ToRoman(): got _ want I
+FAIL
+exit status 1
+FAIL	github.com/BcRikko/learning-go/tdd	0.009s
+Error: Tests failed.
+```
+
+```
+#成功した場合
+Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$
+
+PASS
+ok  	github.com/BcRikko/learning-go/tdd	0.009s
 Success: Tests passed.
 ```

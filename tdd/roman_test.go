@@ -11,6 +11,7 @@ func TestToRoman(t *testing.T) {
 		want Roman
 	}{
 		{"1=>Iに変換できること", 1, "I"},
+		{"2=>IIに変換できること", 2, "II"},
 	}
 
 	for _, test := range testCase {

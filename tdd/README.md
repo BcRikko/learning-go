@@ -140,7 +140,7 @@ for _, test := range testCase {
 ```
 
 
-[todo]()を実行し、テストが通ることを確認する。
+[commit:f1129cc](https://github.com/BcRikko/learning-go/commit/f1129cc304ddf1556b225ddcff3c7f439c0c9016)を実行し、テストが通ることを確認する。
 
 ```
 # 失敗した場合
@@ -162,4 +162,33 @@ Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$
 PASS
 ok  	github.com/BcRikko/learning-go/tdd	0.009s
 Success: Tests passed.
+```
+
+
+## ステップ5: テストを追加する
+
+テストケースに1つ追加する。
+```go
+testCase := []struct {
+    desc string
+    in   Arabic
+    want Roman
+}{
+    {"1=>Iに変換できること", 1, "I"},
+    {"2=>IIに変換できること", 2, "II"},
+}
+```
+
+[todo]()を実行し、失敗することを確認する。
+
+```
+Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$
+
+--- FAIL: TestToRoman (0.00s)
+    --- FAIL: TestToRoman/2=>IIに変換できること (0.00s)
+    	$GOPATH/src/github.com/BcRikko/learning-go/tdd/roman_test.go:20: Arabic.ToRoman(): got I want II
+FAIL
+exit status 1
+FAIL	github.com/BcRikko/learning-go/tdd	0.008s
+Error: Tests failed.
 ```

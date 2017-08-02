@@ -196,7 +196,7 @@ Error: Tests failed.
 
 ## ステップ6: 完成させる
 
-[todo]()を実行し、テストが通ることを確認する。
+[commit:bd6e830](https://github.com/BcRikko/learning-go/commit/bd6e83014c330983ad71ab985631174b39747e01)を実行し、テストが通ることを確認する。
 
 ```
 Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$

@@ -179,7 +179,7 @@ testCase := []struct {
 }
 ```
 
-[todo]()を実行し、失敗することを確認する。
+[commit:0629165](https://github.com/BcRikko/learning-go/commit/0629165c79b543cd70fdf3a616cfa725f39bd654)を実行し、失敗することを確認する。
 
 ```
 Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$
@@ -192,3 +192,34 @@ exit status 1
 FAIL	github.com/BcRikko/learning-go/tdd	0.008s
 Error: Tests failed.
 ```
+
+
+## ステップ6: 完成させる
+
+[todo]()を実行し、テストが通ることを確認する。
+
+```
+Running tool: /usr/local/bin/go test -timeout 30s -tags  -run ^TestToRoman$
+
+PASS
+ok  	github.com/BcRikko/learning-go/tdd	0.008s
+Success: Tests passed.
+```
+
+
+## おまけ
+
+ローマ数字の条件
+
+* 表現できる範囲は`0 < num < 4000`
+* 使う記号は以下の通り
+   * I → 1
+   * V → 5
+   * X → 10
+   * L → 50
+   * C → 100
+   * D → 500
+   * M → 1000
+* ただし4つ以上同じ文字を並べてはいけない（○: III、 ×: IIII → IV）
+* 文字より小さい数字を表すときは左側、大きい数字を表すときは右側に書く
+  * 例 4:IV, 5:V, 6:VI, 9:IX, 10:X, 11:XI

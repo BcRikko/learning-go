@@ -45,7 +45,7 @@ Error: Tests failed.
 ## ステップ2: 仮実装でテストを通す
 
 
-[todo]()で仮実装して実行する。
+[commit:33b7062](https://github.com/BcRikko/learning-go/commit/33b706269621daf69bd16bca5b59b2f4045c9d26)で仮実装して実行する。
 
 ```
 Running tool: /usr/local/bin/go test -timeout 30s -tags 
@@ -62,4 +62,56 @@ Success: Tests passed.
 func ToRoman (in int16) string {
     // hoge
 }
+```
+
+
+## ステップ3: リファクタリング（APIの見直し、関数→メソッドに変更）
+
+独自型`Arabic`を定義して、メソッド`Arabic.ToRoman`を追加する。戻り値にも独自型`Roman`に変更する。
+
+golangにはclass構文がないので、タイプ`type`や構造体`struct`にメソッドを追加できる。
+
+```go
+package main
+
+import (
+    "fmt"
+)
+
+// type
+type MyNumber int16
+
+// func (レシーバ) メソッド名() 戻り値
+func (num MyNumber) ToString() string {
+    return fmt.Sprintf("%v", num)
+}
+
+
+// struct
+type MySquare struct {
+    height, width float64
+}
+
+func (sq MySquare) GetArea() float64 {
+    return sq.height * sq.width
+}
+
+func main() {
+    num := MyNumber(10)
+    str := num.ToString()
+    fmt.Printf("%T: %s \n", str, str)
+
+    sq := MySquare{3, 4}
+    area := sq.GetArea()
+    fmt.Printf("%T: %f \n", area, area)
+}
+```
+
+[todo]()を実行し、テストが通ることを確認する。
+```
+Running tool: /usr/local/bin/go test -timeout 30s -tags 
+
+PASS
+ok  	github.com/BcRikko/learning-go/tdd	0.008s
+Success: Tests passed.
 ```

@@ -5,7 +5,7 @@ import (
 )
 
 func TestToRoman(t *testing.T) {
-	if got, want := ToRoman(1), "I"; got != want {
-		t.Errorf("ToRoman(1): got %v want %v", got, want)
+	if got, want := Arabic(1).ToRoman(), Roman("I"); got != want {
+		t.Errorf("Arabic(1).ToRoman(): got %v want %v", got, want)
 	}
 }

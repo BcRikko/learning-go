@@ -1,6 +1,10 @@
 package roman
 
+type Arabic uint16
+
+type Roman string
+
 // ToRoman は数値をローマ数字に変換する
-func ToRoman(in int16) string {
-	return "I"
+func (in Arabic) ToRoman() Roman {
+	return Roman("I")
 }

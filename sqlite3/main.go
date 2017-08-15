@@ -30,17 +30,22 @@ type Book struct {
 	Title string
 }
 
-func insertData(db *sql.DB, data Book) error {
-	_, err := db.Exec(
+func insertData(db *sql.DB, data Book) (int64, error) {
+	res, err := db.Exec(
 		`INSERT INTO BOOKS (ID, TITLE) VALUES (?, ?)`,
 		data.ID,
 		data.Title,
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 func selectAll(db *sql.DB) (*sql.Rows, error) {
@@ -63,29 +68,39 @@ func selectByID(db *sql.DB, id int64) *sql.Row {
 	return row
 }
 
-func update(db *sql.DB, data Book) error {
-	_, err := db.Exec(
+func update(db *sql.DB, data Book) (int64, error) {
+	res, err := db.Exec(
 		`UPDATE BOOKS SET TITLE=? WHERE ID=?`,
 		data.Title,
 		data.ID,
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	affect, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return affect, nil
 }
 
-func delete(db *sql.DB, id int64) error {
-	_, err := db.Exec(
+func delete(db *sql.DB, id int64) (int64, error) {
+	res, err := db.Exec(
 		`DELETE FROM BOOKS WHERE ID=?`,
 		id,
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	affect, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return affect, nil
 }
 
 func main() {
@@ -102,11 +117,12 @@ func main() {
 		id,
 		"test",
 	}
-	err = insertData(db, book)
+	id, err = insertData(db, book)
 	if err != nil {
 		log.Fatal("insertData()", err)
 		return
 	}
+	fmt.Printf("inserted item id: %d\n", id)
 
 	// select all items
 	rows, err := selectAll(db)
@@ -145,10 +161,12 @@ func main() {
 		id,
 		"updated",
 	}
-	if err := update(db, dataForUpdate); err != nil {
+	affect, err := update(db, dataForUpdate)
+	if err != nil {
 		log.Fatal("update()", err)
 		return
 	}
+	fmt.Printf("affected by update: %d\n", affect)
 
 	row = selectByID(db, id)
 	var checkData Book
@@ -160,10 +178,12 @@ func main() {
 	fmt.Printf("id: %d, title: %s\n", checkData.ID, checkData.Title)
 
 	// delete item by id
-	if err := delete(db, id); err != nil {
+	affect, err = delete(db, id)
+	if err != nil {
 		log.Fatal("delete()", err)
 		return
 	}
+	fmt.Printf("affected by delete: %d\n", affect)
 
 	rows, err = selectAll(db)
 	if err != nil {

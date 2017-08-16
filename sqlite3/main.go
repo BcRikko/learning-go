@@ -103,13 +103,14 @@ func delete(db *sql.DB, id int64) (int64, error) {
 	return affect, nil
 }
 
-func main() {
+func nonTransaction() {
 	// create books table
 	db, err := createTable()
 	if err != nil {
 		log.Fatal("createTable()", err)
 		return
 	}
+	defer db.Close()
 
 	// insert book data
 	id := time.Now().Unix()
@@ -201,5 +202,70 @@ func main() {
 
 		fmt.Printf("id: %d, title: %s\n", b.ID, b.Title)
 	}
+}
 
+func transaction() {
+	// create books table
+	db, err := createTable()
+	if err != nil {
+		log.Fatal("createTable()", err)
+		return
+	}
+	defer db.Close()
+
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal("db.Begin()", err)
+		return
+	}
+
+	// insert 10 items
+	stmt, err := tx.Prepare(`INSERT INTO BOOKS (ID, TITLE) VALUES (?, ?)`)
+	if err != nil {
+		log.Fatal("tx.Prepare()", err)
+		return
+	}
+
+	defer stmt.Close()
+	for i := 0; i < 10; i++ {
+		id := fmt.Sprintf("%d%d", time.Now().Unix(), i)
+		if _, err := stmt.Exec(id, fmt.Sprintf("title-%d", i)); err != nil {
+			log.Fatal("stmt.Exec()", err)
+		}
+	}
+
+	// something
+	isOk := true
+	if isOk {
+		tx.Commit()
+	} else {
+		tx.Rollback()
+	}
+
+	// select all items
+	rows, err := selectAll(db)
+	if err != nil {
+		log.Fatal("selectAll()", err)
+		return
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var b Book
+		if err := rows.Scan(&b.ID, &b.Title); err != nil {
+			log.Fatal("rows.Scan()", err)
+			return
+		}
+
+		fmt.Printf("id: %d, title: %s\n", b.ID, b.Title)
+	}
+
+}
+
+func main() {
+	fmt.Println("not use transaction-----")
+	nonTransaction()
+
+	fmt.Println("use transaction-----")
+	transaction()
 }

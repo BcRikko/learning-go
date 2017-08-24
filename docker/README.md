@@ -65,3 +65,33 @@ if err != nil {
 
 io.Copy(os.Stdout, out)
 ```
+
+
+### Dockerfileからイメージを作成
+
+Dockerfileのままだと使えない？ので、tar.gzで圧縮する。
+
+```shell
+$ docker build -t tags .
+```
+
+```shell
+$ ls
+Dockerfile main.go
+
+$ tar -zcvf Dockerfile.tar.gz Dockerfile
+$ ls
+Dockerfile.tar.gz Dockerfile main.go
+```
+
+```go
+file, err := os.Open("Dockerfile.tar.gz")
+image := "test"
+
+res, err := cli.ImageBuild(ctx, file, types.ImageBuildOptions{
+    Tags:        []string{image},
+    ForceRemove: true,
+})
+```
+
+`ForceRemove:true`にすることでイメージをビルドするときの中間コンテナを削除する。

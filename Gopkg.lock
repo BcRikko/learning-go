@@ -38,6 +38,30 @@
   version = "v0.3.1"
 
 [[projects]]
+  name = "github.com/labstack/echo"
+  packages = ["."]
+  revision = "6c54ff78a2351623e91ccf085d94a78d02b1882c"
+  version = "3.2.2"
+
+[[projects]]
+  name = "github.com/labstack/gommon"
+  packages = ["color","log"]
+  revision = "779b8a8b9850a97acba6a3fe20feb628c39e17c1"
+  version = "0.2.2"
+
+[[projects]]
+  name = "github.com/mattn/go-colorable"
+  packages = ["."]
+  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
+  version = "v0.0.9"
+
+[[projects]]
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  revision = "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+  version = "v0.0.2"
+
+[[projects]]
   name = "github.com/mattn/go-sqlite3"
   packages = ["."]
   revision = "ca5e3819723d8eeaf170ad510e7da1d6d2e94a08"
@@ -45,7 +69,7 @@
 
 [[projects]]
   name = "github.com/moby/moby"
-  packages = ["api/types","api/types/container","client"]
+  packages = ["client"]
   revision = "092cba3727bb9b4a2f0e922cd6c0f93ea270e363"
   version = "v1.13.1"
 
@@ -63,8 +87,20 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/valyala/bytebufferpool"
+  packages = ["."]
+  revision = "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/valyala/fasttemplate"
+  packages = ["."]
+  revision = "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["ssh/terminal"]
+  packages = ["acme","acme/autocert","ssh/terminal"]
   revision = "eb71ad9bd329b5ac0fd0148dd99bd62e8be8e035"
 
 [[projects]]
@@ -82,6 +118,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6201bcd882004f44c59d4c919e54b49c88d599743e480de7805705e7ab1236c4"
+  inputs-digest = "9ea9c49345eb08ac44155d18941157a20b58178314ce23ad97aed34f99fa2d5b"
   solver-name = "gps-cdcl"
   solver-version = 1

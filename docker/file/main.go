@@ -24,6 +24,7 @@ func main() {
 
 	cwd, _ := os.Getwd()
 	file, err := os.Open(cwd + "/Dockerfile.tar.gz")
+	defer file.Close()
 
 	imageName := fmt.Sprintf("%v", time.Now().Unix())
 	res, err := cli.ImageBuild(ctx, file, types.ImageBuildOptions{

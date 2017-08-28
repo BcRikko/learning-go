@@ -25,3 +25,50 @@
 
 tarでファイルを1つにまとめ、gzで圧縮したファイルということ。
 
+
+## アーカイブ・圧縮
+
+### tarの仕組み
+
+tarは **TA**pe **A**rchiveの略。
+
+tarアーカイブファイルは、headerブロックとcontentブロックからなる。複数ファイルをまとめるときにそれぞれのファイルにheaderを付けてアーカイブする。
+
+|ブロック|サイズ(byte)|
+|:---|---:|
+|header1|512|
+|content1|...|
+|header2|512|
+|content2|...|
+|...|...|
+
+headerブロックには以下のフィールドがある。
+
+* name
+* mode
+   * setUID, setGID, TSVTXのモードがある
+* uid
+   * ユーザID
+* gid
+   * グループID
+* size
+   * ファイルサイズ
+* mtime
+   * 最終更新日
+* chksum
+* flagtype
+   * アーカイブの種類を決定する
+* linkname
+* magic
+* version
+* uname
+* gname
+* devmajor
+* devminor 
+* prefix
+
+[tar の構造](http://www.redout.net/data/tar.html)
+
+
+
+## 展開・解凍

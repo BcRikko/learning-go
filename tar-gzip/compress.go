@@ -1,4 +1,4 @@
-gi tpackage main
+package main
 
 import (
 	"archive/tar"
@@ -35,12 +35,6 @@ func addFile(tw *tar.Writer, path string) error {
 }
 
 func Compress(in string, out string) error {
-	var files []string
-	filepath.Walk(in, func(path string, info os.FileInfo, err error) error {
-		files = append(files, path)
-		return nil
-	})
-
 	file, err := os.Create(out)
 	if err != nil {
 		return err
@@ -53,11 +47,13 @@ func Compress(in string, out string) error {
 	tw := tar.NewWriter(gw)
 	defer tw.Close()
 
-	for _, path := range files[1:] {
+	filepath.Walk(in, func(path string, info os.FileInfo, err error) error {
 		if err := addFile(tw, path); err != nil {
 			return err
 		}
-	}
+
+		return nil
+	})
 
 	return nil
 }

@@ -1,3 +1,7 @@
 FROM alpine
 
-CMD ["echo", "hello world"]
+ADD ./ /root
+WORKDIR /root
+
+
+CMD ["sh", "script.sh"]

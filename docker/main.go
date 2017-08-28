@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
 
@@ -44,4 +45,22 @@ func main() {
 	}
 
 	io.Copy(os.Stdout, out)
+
+	images, err := cli.ImageList(ctx, types.ImageListOptions{})
+	if err != nil {
+		panic(err)
+	}
+	for _, image := range images {
+		fmt.Printf("ID: %s, Labels: %s, Container: %d, Size: %d\n", image.ID, image.Labels, image.Containers, image.Size)
+	}
+
+	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{
+		All: true,
+	})
+	if err != nil {
+		panic(err)
+	}
+	for _, container := range containers {
+		fmt.Printf("ID: %s, Name: %s, Image: %s, Command: %s\n", container.ID, container.Names, container.Image, container.Command)
+	}
 }

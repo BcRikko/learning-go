@@ -1,10 +1,9 @@
-// https://medium.com/@skdomino/taring-untaring-files-in-go-6b07cf56bc07
-
 package main
 
 import (
 	"archive/tar"
 	"compress/gzip"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -42,7 +41,11 @@ func Decompress(in string, out string) error {
 
 		path := filepath.Join(out, hdr.Name)
 
-		switch hdr.Typeflag {
+		fmt.Printf("%T %d\n", tar.TypeReg, tar.TypeReg)   // int32 48
+		fmt.Printf("%T %d\n", hdr.Typeflag, hdr.Typeflag) // uint8 0
+
+		// TODO: なぜかtar.TypeRegがint32 48になってしまうので、48を足して回避
+		switch hdr.Typeflag + 48 {
 		case tar.TypeDir:
 			if _, err := os.Stat(path); err == nil {
 				if err := os.MkdirAll(path, 0755); err != nil {
@@ -60,6 +63,8 @@ func Decompress(in string, out string) error {
 			if _, err := io.Copy(file, tr); err != nil {
 				return err
 			}
+		default:
+			fmt.Println("unsupported")
 		}
 	}
 }

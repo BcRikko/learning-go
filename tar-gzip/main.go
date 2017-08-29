@@ -12,15 +12,15 @@ func main() {
 	}
 
 	if err := Compress(
-		filepath.Join(dir, "dir"),
-		filepath.Join(dir, "dir.tar.gz"),
+		filepath.Join(dir, "in"),
+		filepath.Join(dir, "golang.tar.gz"),
 	); err != nil {
 		panic(err)
 	}
 
 	if err := Decompress(
-		filepath.Join(dir, "dir2.tar.gz"),
-		filepath.Join(dir, "dir2"),
+		filepath.Join(dir, "golang.tar.gz"),
+		filepath.Join(dir, "out"),
 	); err != nil {
 		panic(err)
 	}
